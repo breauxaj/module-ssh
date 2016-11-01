@@ -23,7 +23,7 @@ class ssh (
     ensure  => $ensure,
   }
 
-  $ssh_config = hiera('ssh::config',{})
+  $ssh_config = hiera_hash('ssh::config',{})
   create_resources('ssh::config',$ssh_config)
 
   service { $::ssh::params::ssh_service:
