@@ -8,25 +8,39 @@
 class ssh::params {
   $ssh_package_ensure = 'latest'
 
-  $ssh_context = '/files/etc/ssh/sshd_config'
-
   case $::osfamily {
-    'RedHat': {
-      $ssh_packages = [
-        'openssh',
-        'openssh-server',
-        'openssh-clients'
-      ]
-
-      $ssh_service  = 'sshd'
-    }
     'Debian': {
-      $ssh_packages = [
-        'openssh-server',
-        'openssh-client'
-      ]
+      case $::operatingsystem {
+        default: {
+          case $::operatingsystemmajrelease {
+            default: {
+              $ssh_packages = [
+                'openssh-server',
+                'openssh-client'
+              ]
 
-      $ssh_service  = 'ssh'
+              $ssh_service  = 'ssh'
+            }
+          }
+        }
+      }
+    }
+    'RedHat': {
+      case $::operatingsystem {
+        default: {
+          case $::operatingsystemmajrelease {
+            default: {
+              $ssh_packages = [
+                'openssh',
+                'openssh-server',
+                'openssh-clients'
+              ]
+
+              $ssh_service  = 'sshd'
+            }
+          }
+        }
+      }
     }
     default: {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
