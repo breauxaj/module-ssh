@@ -8,6 +8,8 @@
 class ssh::params {
   $ssh_package_ensure = 'latest'
 
+  $ssh_context = '/files/etc/ssh/sshd_config'
+
   case $::osfamily {
     'Debian': {
       case $::operatingsystem {
