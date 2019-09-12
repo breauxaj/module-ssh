@@ -1,13 +1,6 @@
 node default {
   include ::ssh
 
-  case $::operatingsystem {
-    'Amazon': {
-        Package { allow_virtual => false }
-    }
-    default: {}
-  }
-
   ssh::config {
     "LogLevel":         value => 'VERBOSE';
     "LoginGraceTime":   value => '30';
